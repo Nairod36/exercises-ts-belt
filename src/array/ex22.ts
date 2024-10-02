@@ -2,10 +2,39 @@
 
 // // make the new type of a product
 
-// const products = [
-//   { name: 'Laptop', price: 1000, category: 'Electronics', quantity: 2 },
-//   { name: 'Mouse', price: 25, category: 'Accessories', quantity: 5 },
-//   { name: 'Monitor', price: 200, category: 'Electronics', quantity: 1 },
-//   { name: 'Keyboard', price: 75, category: 'Accessories', quantity: 3 },
-// ];
-export const ArrayFn22 = () => {};
+import { A } from "@mobily/ts-belt";
+
+export type Product = {
+    name: string;
+    price: number;
+    category: string;
+    quantity: number;
+  };
+
+  
+const products: Product[] = [
+  { name: 'Laptop', price: 1000, category: 'Electronics', quantity: 2 },
+  { name: 'Mouse', price: 25, category: 'Accessories', quantity: 5 },
+  { name: 'Monitor', price: 200, category: 'Electronics', quantity: 1 },
+  { name: 'Keyboard', price: 75, category: 'Accessories', quantity: 3 },
+];
+
+export const ArrayFn22 = () => {
+  const totalQuantitiesByCategory = A.reduce(
+    products,
+    {} as Record<string, number>, // Initialiser comme un objet vide
+    (accumulator: { [x: string]: any; }, current: { category: string | number; quantity: any; }) => {
+      // Vérifier si la catégorie existe déjà dans l'accumulateur
+      if (accumulator[current.category]) {
+        // Ajouter la quantité actuelle si la catégorie existe déjà
+        accumulator[current.category] += current.quantity;
+      } else {
+        // Sinon, initialiser la catégorie avec la quantité actuelle
+        accumulator[current.category] = current.quantity;
+      }
+      return accumulator;
+    }
+  );
+
+  console.log(totalQuantitiesByCategory);
+};

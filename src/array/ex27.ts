@@ -3,21 +3,26 @@
 import { A } from "@mobily/ts-belt";
 
 const products = [
-  { name: 'Laptop', price: 1000, inStock: true },
-  { name: 'Mouse', price: 25, inStock: false },
-  { name: 'Keyboard', price: 75, inStock: true },
+  { name: "Laptop", price: 1000, inStock: true },
+  { name: "Mouse", price: 25, inStock: false },
+  { name: "Keyboard", price: 75, inStock: true },
 ];
 
 // Fonction pour filtrer les produits selon des critères multiples
 type Product = { name: string; price: number; inStock: boolean };
 
-const filterProducts = (products: Product[], conditions: Array<(product: Product) => boolean>) => {
+const filterProducts = (
+  products: Product[],
+  conditions: Array<(product: Product) => boolean>,
+) => {
   return A.reduce(
     products,
     [] as typeof products, // Valeur initiale est un tableau vide
     (filtered: any, current: Product) => {
       // Vérifier si le produit satisfait toutes les conditions
-      const satisfiesAllConditions = conditions.every(condition => condition(current));
+      const satisfiesAllConditions = conditions.every((condition) =>
+        condition(current),
+      );
 
       // Si toutes les conditions sont satisfaites, ajouter le produit à la liste filtrée
       if (satisfiesAllConditions) {
@@ -25,17 +30,16 @@ const filterProducts = (products: Product[], conditions: Array<(product: Product
       }
 
       return filtered; // Retourner la liste filtrée inchangée
-    }
+    },
   );
 };
 
-// Exemples d'utilisation
 const conditions = [
-  (product: { price: number; }) => product.price > 50, // Prix supérieur à 50
-  (product: { inStock: any; }) => product.inStock, // En stock
+  (product: { price: number }) => product.price > 50, // Prix supérieur à 50
+  (product: { inStock: any }) => product.inStock, // En stock
 ];
 
 export const ArrayFn27 = () => {
   const filteredProducts = filterProducts(products, conditions);
-  console.log('Filtered products:', filteredProducts);
+  console.log("Filtered products:", filteredProducts);
 };

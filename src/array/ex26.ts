@@ -3,15 +3,18 @@
 import { A } from "@mobily/ts-belt";
 
 const products = [
-  { name: 'Laptop', price: 1000, inStock: true },
-  { name: 'Mouse', price: 25, inStock: false },
-  { name: 'Keyboard', price: 75, inStock: true },
+  { name: "Laptop", price: 1000, inStock: true },
+  { name: "Mouse", price: 25, inStock: false },
+  { name: "Keyboard", price: 75, inStock: true },
 ];
 
 // Fonction pour calculer le prix total basé sur une fonction de filtrage
 type Product = { name: string; price: number; inStock: boolean };
 
-const calculateTotalPrice = (products: Product[], filterFn: (product: Product) => boolean) => {
+const calculateTotalPrice = (
+  products: Product[],
+  filterFn: (product: Product) => boolean,
+) => {
   return A.reduce(
     products,
     0, // Valeur initiale pour le total
@@ -21,14 +24,13 @@ const calculateTotalPrice = (products: Product[], filterFn: (product: Product) =
         return total + current.price; // Ajouter le prix du produit filtré
       }
       return total; // Retourner le total inchangé si le produit ne passe pas le filtre
-    }
+    },
   );
 };
 
-// Exemples d'utilisation
-const filterInStock = (product: { inStock: any; }) => product.inStock; // Filtre basé sur le stock
+const filterInStock = (product: { inStock: any }) => product.inStock;
 
 export const ArrayFn26 = () => {
   const totalPrice = calculateTotalPrice(products, filterInStock);
-  console.log('Total price of in-stock products:', totalPrice);
+  console.log("Total price of in-stock products:", totalPrice);
 };
